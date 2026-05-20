@@ -184,3 +184,28 @@ setInterval(function () {
         "scale(" + skala + ")";
 
 }, 50);
+
+// =================================
+// ANIMASI SCROLL FADE IN
+// =================================
+
+const semuaFade = document.querySelectorAll(".fade-scroll");
+
+function tampilScroll() {
+
+    semuaFade.forEach(function (item) {
+
+        const posisi = item.getBoundingClientRect().top;
+        const tinggiLayar = window.innerHeight;
+
+        if (posisi < tinggiLayar - 100) {
+            item.classList.add("show");
+        }
+
+    });
+
+}
+
+window.addEventListener("scroll", tampilScroll);
+
+tampilScroll();
