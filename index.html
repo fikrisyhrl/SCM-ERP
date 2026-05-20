@@ -10,7 +10,9 @@
 
 <body>
   <nav class="navbar">
-    <span class="logo">🥬 Toko Sayur Bu Ani</span>
+    <span class="logo">
+  🥬 <span>Toko Sayur Bu Ani</span>
+</span>
     <ul class="nav-links">
       <li><a href="#beranda">Beranda</a></li>
       <li><a href="#produk">Produk</a></li>
@@ -37,46 +39,104 @@
     <p class="subjudul">Dipanen pagi hari — dijamin segar!</p>
 
     <table>
-      <thead>
-        <tr>
-          <th>Nama Produk</th>
-          <th>Satuan</th>
-          <th>Harga</th>
-          <th>Aksi</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>🌿 Bayam Hijau</td>
-          <td>per ikat (~200gr)</td>
-          <td>Rp 3.000</td>
-          <td><button class="btn-tambah">+ Tambah</button></td>
-        </tr>
-        <tr>
-          <td>🥕 Wortel</td>
-          <td>per kg</td>
-          <td>Rp 8.000</td>
-          <td><button class="btn-tambah">+ Tambah</button></td>
-        </tr>
-        <tr>
-          <td>🌿 Kangkung</td>
-          <td>per ikat (~300gr)</td>
-          <td>Rp 2.500</td>
-          <td><button class="btn-tambah">+ Tambah</button></td>
-        </tr>
-        <tr>
-          <td>🍅 Tomat Merah</td>
-          <td>per kg</td>
-          <td>Rp 12.000</td>
-          <td><button class="btn-tambah">+ Tambah</button></td>
-        </tr>
-        <tr>
-          <td>🌶️ Cabai Merah</td>
-          <td>per ons</td>
-          <td>Rp 5.000</td>
-          <td><button class="btn-tambah">+ Tambah</button></td>
-        </tr>
-      </tbody>
+      <div class="produk-grid">
+
+  <div class="card-produk">
+    <img src="https://images.unsplash.com/photo-1576045057995-568f588f82fb?q=80&w=800&auto=format&fit=crop" alt="Bayam">
+    
+    <div class="isi-card">
+      <h3>🌿 Bayam Hijau</h3>
+      <p>per ikat (~200gr)</p>
+
+      <div class="harga">Rp 3.000</div>
+
+      <button 
+        class="btn-tambah"
+        data-nama="Bayam Hijau"
+        data-harga="3000"
+      >
+        + Tambah
+      </button>
+    </div>
+  </div>
+
+  <div class="card-produk">
+    <img src="https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?q=80&w=800&auto=format&fit=crop" alt="Wortel">
+
+    <div class="isi-card">
+      <h3>🥕 Wortel</h3>
+      <p>per kg</p>
+
+      <div class="harga">Rp 8.000</div>
+
+      <button 
+        class="btn-tambah"
+        data-nama="Wortel"
+        data-harga="8000"
+      >
+        + Tambah
+      </button>
+    </div>
+  </div>
+
+  <div class="card-produk">
+    <img src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?q=80&w=800&auto=format&fit=crop" alt="Kangkung">
+
+    <div class="isi-card">
+      <h3>🌿 Kangkung</h3>
+      <p>per ikat (~300gr)</p>
+
+      <div class="harga">Rp 2.500</div>
+
+      <button 
+        class="btn-tambah"
+        data-nama="Kangkung"
+        data-harga="2500"
+      >
+        + Tambah
+      </button>
+    </div>
+  </div>
+
+  <div class="card-produk">
+    <img src="https://images.unsplash.com/photo-1546094096-0df4bcaaa337?q=80&w=800&auto=format&fit=crop" alt="Tomat">
+
+    <div class="isi-card">
+      <h3>🍅 Tomat Merah</h3>
+      <p>per kg</p>
+
+      <div class="harga">Rp 12.000</div>
+
+      <button 
+        class="btn-tambah"
+        data-nama="Tomat Merah"
+        data-harga="12000"
+      >
+        + Tambah
+      </button>
+    </div>
+  </div>
+
+  <div class="card-produk">
+    <img src="https://images.unsplash.com/photo-1588252303782-cb80119abd6d?q=80&w=800&auto=format&fit=crop" alt="Cabai">
+
+    <div class="isi-card">
+      <h3>🌶️ Cabai Merah</h3>
+      <p>per ons</p>
+
+      <div class="harga">Rp 5.000</div>
+
+      <button 
+        class="btn-tambah"
+        data-nama="Cabai Merah"
+        data-harga="5000"
+      >
+        + Tambah
+      </button>
+    </div>
+  </div>
+
+</div>
     </table>
   </section>
   <!-- CHECKOUT -->

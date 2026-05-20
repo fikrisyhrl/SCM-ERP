@@ -1,9 +1,5 @@
 const semuaTombol = document.querySelectorAll(".btn-tambah");
 
-// ===============================
-// DATA CHECKOUT
-// ===============================
-
 let daftarPesanan = [];
 let totalHarga = 0;
 
@@ -11,23 +7,19 @@ const listCheckout = document.getElementById("list-checkout");
 const totalHargaText = document.getElementById("total-harga");
 const btnCheckout = document.getElementById("btn-checkout");
 
-// ===============================
+// =================================
 // TAMBAH PRODUK
-// ===============================
+// =================================
 
 semuaTombol.forEach(function (tombol) {
 
     tombol.addEventListener("click", function () {
 
-        const baris = tombol.parentElement.parentElement;
+        // ambil data dari atribut button
+        const namaProduk = tombol.dataset.nama;
+        const harga = parseInt(tombol.dataset.harga);
 
-        const namaProduk = baris.children[0].textContent;
-        const hargaText = baris.children[2].textContent;
-
-        const harga = parseInt(
-            hargaText.replace("Rp", "").replace(/\./g, "").trim()
-        );
-
+        // simpan ke array
         daftarPesanan.push({
             nama: namaProduk,
             harga: harga
@@ -47,9 +39,9 @@ semuaTombol.forEach(function (tombol) {
 
 });
 
-// ===============================
+// =================================
 // TAMPILKAN CHECKOUT
-// ===============================
+// =================================
 
 function tampilkanCheckout() {
 
@@ -66,6 +58,7 @@ function tampilkanCheckout() {
 
             listCheckout.innerHTML += `
                 <div class="item-checkout">
+
                     <div>
                         <strong>${item.nama}</strong><br>
                         Rp ${item.harga.toLocaleString("id-ID")}
@@ -74,6 +67,7 @@ function tampilkanCheckout() {
                     <button onclick="hapusItem(${index})">
                         Hapus
                     </button>
+
                 </div>
             `;
 
@@ -86,9 +80,9 @@ function tampilkanCheckout() {
 
 }
 
-// ===============================
+// =================================
 // HAPUS ITEM
-// ===============================
+// =================================
 
 function hapusItem(index) {
 
@@ -100,19 +94,21 @@ function hapusItem(index) {
 
 }
 
-// ===============================
-// FITUR CHECKOUT
-// ===============================
+// =================================
+// CHECKOUT
+// =================================
 
 btnCheckout.addEventListener("click", function () {
 
     if (daftarPesanan.length === 0) {
+
         alert("Keranjang masih kosong!");
         return;
+
     }
 
     alert(
-        "Checkout berhasil!\nTotal pembayaran: Rp " +
+        "Checkout berhasil!\n\nTotal pembayaran: Rp " +
         totalHarga.toLocaleString("id-ID")
     );
 
@@ -123,9 +119,9 @@ btnCheckout.addEventListener("click", function () {
 
 });
 
-// ===============================
-// FORM FEEDBACK USER
-// ===============================
+// =================================
+// FEEDBACK FORM
+// =================================
 
 const formKontak = document.getElementById("form-kontak");
 const pesanSukses = document.getElementById("pesan-sukses");
@@ -144,9 +140,9 @@ formKontak.addEventListener("submit", function (event){
 
 });
 
-// ===============================
+// =================================
 // ANIMASI JUDUL
-// ===============================
+// =================================
 
 const judul = document.querySelector(".hero-teks h1");
 

@@ -2,7 +2,7 @@
   position: sticky;
   top: 0;
   z-index: 100; 
-  background-color: #ffffff;
+  background-color: #1e3a8a;
   border-bottom: 1px solid #e5e7eb;
   padding: 0 5%;
   height: 60px;
@@ -10,12 +10,17 @@
   align-items: center;
   justify-content: space-between;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+  backdrop-filter: blur(10px);
 }
 
 .logo {
   font-weight: 700;
-  font-size: 1.05rem;
-  color: #16a34a;
+  font-size: 1.2rem;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
 .nav-links {
@@ -26,12 +31,12 @@
 .nav-links a {
   font-size: 0.9rem;
   font-weight: 500;
-  color: #1f2937;
+  color: #ffffff;
   transition: color 0.2s;
 }
 
 .nav-links a:hover {
-  color: #16a34a;
+  color: #bfdbfe;
 }
 
 * {
@@ -351,6 +356,60 @@ td {
 
 }
 
+/* =================================
+   PRODUK MARKETPLACE
+================================= */
+
+.produk-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+}
+
+.card-produk {
+  background-color: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  transition: 0.3s;
+}
+
+.card-produk:hover {
+  transform: translateY(-6px);
+}
+
+.card-produk img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.isi-card {
+  padding: 18px;
+}
+
+.isi-card h3 {
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+.isi-card p {
+  color: #6b7280;
+  font-size: 0.85rem;
+  margin-bottom: 12px;
+}
+
+.harga {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin-bottom: 16px;
+}
+
+.card-produk .btn-tambah {
+  width: 100%;
+}
+
 /* RESPONSIVE — MEDIA QUERY Tablet (layar ≤ 900px) */
 @media (max-width: 900px) {
   .langkah-list {
@@ -426,4 +485,58 @@ td {
   font-weight: 700;
   margin-bottom: 18px;
   color: #14532d;
+}
+
+/* =================================
+   WARNA UTAMA BARU - BIRU TUA
+================================= */
+
+:root {
+  --primary: #1e3a8a;
+  --primary-dark: #172554;
+  --soft-blue: #dbeafe;
+}
+
+.navbar,
+thead tr,
+.btn-tambah,
+.tombol,
+.langkah-list li::before {
+  background-color: var(--primary);
+}
+
+.btn-tambah:hover,
+.tombol:hover {
+  background-color: var(--primary-dark);
+}
+
+.logo,
+.checkout-box h3,
+.kontak-info h3 {
+  color: var(--primary);
+}
+
+.hero {
+  background: linear-gradient(
+    135deg,
+    #eff6ff 0%,
+    #dbeafe 100%
+  );
+}
+
+.hero-teks h1 {
+  color: var(--primary-dark);
+}
+
+.sosmed a {
+  background-color: var(--soft-blue);
+}
+
+.footer {
+  background-color: var(--primary-dark);
+}
+
+.logo,
+.logo span {
+  color: #ffffff !important;
 }
