@@ -1,0 +1,17 @@
+Langkah-langkah yang harus dilakukan setelah Anda membuka kembali VS Code:
+
+--- 1. UPDATE DATABASE DI SUPABASE ---
+1. Buka browser dan login ke https://supabase.com/
+2. Buka project Anda, lalu masuk ke menu SQL Editor
+3. Copy dan Paste perintah di bawah ini ke SQL Editor, lalu klik tombol RUN:
+
+ALTER TABLE public.materials ADD COLUMN user_id UUID REFERENCES auth.users(id);
+ALTER TABLE public.sales ADD COLUMN user_id UUID REFERENCES auth.users(id);
+
+--- 2. UPLOAD KODE KE GITHUB ---
+1. Buka terminal di VS Code (Ctrl + `)
+2. Copy dan Paste perintah di bawah ini SATU PER SATU lalu tekan Enter:
+
+git add .
+git commit -m "Implementasi Supabase Auth dan Isolasi Data"
+git push origin main
