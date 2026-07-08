@@ -258,9 +258,22 @@
 
         async function initializeApp() {
             try {
-                // Ambil config dari API internal
-                const res = await fetch('/api/config');
-                const config = await res.json();
+                let config = {};
+                try {
+                    // Coba ambil config dari API internal (saat online di Vercel)
+                    const res = await fetch('/api/config');
+                    if (res.ok) {
+                        config = await res.json();
+                    }
+                } catch (e) {
+                    console.log("Menjalankan mode lokal (Fallback Config).");
+                }
+                
+                // Fallback Config jika API gagal (misal file dibuka langsung di lokal tanpa server)
+                if (!config.supabaseUrl || !config.supabaseKey) {
+                    config.supabaseUrl = 'https://tapklrbygapkxsksltgw.supabase.co';
+                    config.supabaseKey = 'sb_publishable_ud69cPdqZTKPBfCESXVWdA_miQUfzeZ';
+                }
                 
                 // Inisialisasi Supabase
                 supabaseClient = supabase.createClient(config.supabaseUrl, config.supabaseKey);
