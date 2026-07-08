@@ -318,7 +318,13 @@
                             email: email,
                             password: pass,
                         });
-                        if (error) throw error;
+                        
+                        if (error) {
+                            if (error.message.includes('Invalid login credentials')) {
+                                throw new Error('Email atau password salah.');
+                            }
+                            throw error;
+                        }
                         
                         sessionStorage.setItem('user_logged_in', 'true');
                         sessionStorage.setItem('access_token', data.session.access_token);
@@ -335,7 +341,18 @@
                         });
                         
                         if (error) {
+                            if (error.message.includes('User already registered')) {
+                                throw new Error('Email ini sudah terdaftar. Silakan login.');
+                            }
+                            if (error.message.includes('Password should be at least 6 characters')) {
+                                throw new Error('Password terlalu lemah. Minimal 6 karakter.');
+                            }
                             throw error;
+                        }
+                        
+                        // Deteksi jika user sudah ada tapi tidak error (perilaku keamanan Supabase v2 jika confirm email aktif)
+                        if (data.user && data.user.identities && data.user.identities.length === 0) {
+                            throw new Error('Email ini sudah terdaftar. Silakan login.');
                         }
                         
                         // Jika Supabase otomatis membuat sesi (login), kita sign out
@@ -356,7 +373,8 @@
                     loginError.style.display = 'block';
                     loginError.textContent = err.message || 'Terjadi kesalahan autentikasi!';
                 } finally {
-                    btn.textContent = oriText;
+                    // Update ulang teks tombol sesuai dengan mode saat ini agar sinkron
+                    btn.textContent = isLoginMode ? 'Masuk ke Dasbor' : 'Daftar Akun';
                     btn.disabled = false;
                 }
             });
