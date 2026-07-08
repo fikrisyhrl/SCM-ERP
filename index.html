@@ -333,20 +333,24 @@
                             email: email,
                             password: pass,
                         });
-                        if (error) throw error;
                         
-                        if (data.session) {
-                            sessionStorage.setItem('user_logged_in', 'true');
-                            sessionStorage.setItem('access_token', data.session.access_token);
-                            showToast('Pendaftaran Berhasil', 'Akun telah dibuat dan Anda langsung login.');
-                        } else {
-                            showToast('Pendaftaran Berhasil', 'Akun berhasil dibuat. Anda sekarang bisa login.');
-                            toggleAuthMode('login');
+                        if (error) {
+                            throw error;
                         }
+                        
+                        // Jika Supabase otomatis membuat sesi (login), kita sign out
+                        // karena requirement user harus login ulang secara manual.
+                        if (data.session) {
+                            await supabaseClient.auth.signOut();
+                        }
+                        
+                        showToast('Pendaftaran Berhasil', 'Akun berhasil dibuat. Silakan masuk (login) dengan akun Anda.');
+                        
+                        // Arahkan kembali ke tab login
+                        toggleAuthMode('login');
                         
                         document.getElementById('email').value = '';
                         document.getElementById('password').value = '';
-                        checkLoginStatus();
                     }
                 } catch (err) {
                     loginError.style.display = 'block';
