@@ -2,250 +2,441 @@
 <html lang="id">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Toko Sayur Bu Ani</title>
-  <link rel="stylesheet" href="style_praktek.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNAGI ERP System</title>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <nav class="navbar">
-    <span class="logo">🥬 Toko Sayur Bu Ani</span>
-    <ul class="nav-links">
-      <li><a href="#beranda">Beranda</a></li>
-      <li><a href="#produk">Produk</a></li>
-      <li><a href="#cara-pesan">Cara Pesan</a></li>
-      <li><a href="#kontak">Kontak</a></li>
-    </ul>
-  </nav>
 
-  <section id="beranda" class="hero">
-    <div class="hero-teks">
-      <h1>Sayur Segar,<br />Harga Bersahabat 🌿</h1>
-      <p>
-        Langsung dari petani lokal. Diantar ke pintu rumah Anda setiap pagi!
-      </p>
-      <a href="#produk" class="tombol">Belanja Sekarang</a>
-    </div>
+    <!-- TOAST CONTAINER -->
+    <div id="toast-container"></div>
 
-    <!-- Ganti src dengan foto hero kamu -->
-    <img src="images/hero.jpg" alt="Sayur Segar Bu Ani" class="hero-img" />
-  </section>
-
-  <section id="produk" class="section-produk">
-    <h2>Produk Kami</h2>
-    <p class="subjudul">Dipanen pagi hari — dijamin segar!</p>
-
-   <div class="produk-grid">
-
-  <div class="card-produk">
-    <img src="https://images.unsplash.com/photo-1576045057995-568f588f82fb?q=80&w=800&auto=format&fit=crop" alt="Bayam">
-    
-    <div class="isi-card">
-      <h3>🌿 Bayam Hijau</h3>
-      <p>per ikat (~200gr)</p>
-
-      <div class="harga">Rp 3.000</div>
-
-      <button 
-        class="btn-tambah"
-        data-nama="Bayam Hijau"
-        data-harga="3000"
-      >
-        + Tambah
-      </button>
-    </div>
-  </div>
-
-  <div class="card-produk">
-    <img src="https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?q=80&w=800&auto=format&fit=crop" alt="Wortel">
-
-    <div class="isi-card">
-      <h3>🥕 Wortel</h3>
-      <p>per kg</p>
-
-      <div class="harga">Rp 8.000</div>
-
-      <button 
-        class="btn-tambah"
-        data-nama="Wortel"
-        data-harga="8000"
-      >
-        + Tambah
-      </button>
-    </div>
-  </div>
-
-  <div class="card-produk">
-    <img src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?q=80&w=800&auto=format&fit=crop" alt="Kangkung">
-
-    <div class="isi-card">
-      <h3>🌿 Kangkung</h3>
-      <p>per ikat (~300gr)</p>
-
-      <div class="harga">Rp 2.500</div>
-
-      <button 
-        class="btn-tambah"
-        data-nama="Kangkung"
-        data-harga="2500"
-      >
-        + Tambah
-      </button>
-    </div>
-  </div>
-
-  <div class="card-produk">
-    <img src="https://images.unsplash.com/photo-1546094096-0df4bcaaa337?q=80&w=800&auto=format&fit=crop" alt="Tomat">
-
-    <div class="isi-card">
-      <h3>🍅 Tomat Merah</h3>
-      <p>per kg</p>
-
-      <div class="harga">Rp 12.000</div>
-
-      <button 
-        class="btn-tambah"
-        data-nama="Tomat Merah"
-        data-harga="12000"
-      >
-        + Tambah
-      </button>
-    </div>
-  </div>
-
-  <div class="card-produk">
-    <img src="https://images.unsplash.com/photo-1588252303782-cb80119abd6d?q=80&w=800&auto=format&fit=crop" alt="Cabai">
-
-    <div class="isi-card">
-      <h3>🌶️ Cabai Merah</h3>
-      <p>per ons</p>
-
-      <div class="harga">Rp 5.000</div>
-
-      <button 
-        class="btn-tambah"
-        data-nama="Cabai Merah"
-        data-harga="5000"
-      >
-        + Tambah
-      </button>
-    </div>
-  </div>
-
-</div>
-    </table>
-  </section>
-  <!-- CHECKOUT -->
-<div class="checkout-box">
-  <h3>🛒 Checkout Pesanan</h3>
-
-  <div id="list-checkout">
-    <p>Belum ada produk dipilih.</p>
-  </div>
-
-  <div class="checkout-total">
-    Total: <span id="total-harga">Rp 0</span>
-  </div>
-
-  <button id="btn-checkout" class="tombol">
-    Checkout Sekarang
-  </button>
-</div>
-
-  <section id="cara-pesan" class="section-cara-pesan">
-    <h2>Cara Pemesanan</h2>
-    <p class="subjudul">Mudah dan cepat!</p>
-
-    <ol class="langkah-list">
-      <li>
-        <strong>Pilih Produk</strong>
-        <p>Lihat daftar sayuran dan klik tombol Tambah.</p>
-      </li>
-      <li>
-        <strong>Hubungi via WhatsApp</strong>
-        <p>Kirim pesanan kamu ke nomor 0812-3456-7890.</p>
-      </li>
-      <li>
-        <strong>Konfirmasi Pesanan</strong>
-        <p>Kami akan konfirmasi stok dan harga total.</p>
-      </li>
-      <li>
-        <strong>Diantar ke Rumah!</strong>
-        <p>Sayur segar tiba dalam 1–2 jam. Bayar di tempat.</p>
-      </li>
-    </ol>
-  </section>
-
-  <section id="kontak" class="section-kontak">
-    <h2>Hubungi Kami 📞</h2>
-    <p class="subjudul">Ada pertanyaan? Kirim pesan di bawah ini.</p>
-    <div class="kontak-wrap">
-      <!-- Info Toko — contoh <ul> tanpa urutan -->
-      <div class="kontak-info">
-        <h3>Informasi Toko</h3>
-        <ul>
-          <li>📍 Jl. Pasar Anyar No. 12, Bogor</li>
-          <li>📱 WhatsApp: 0812-3456-7890</li>
-          <li>📧 tokosayurbuani@gmail.com</li>
-          <li>⏰ Senin–Sabtu, 06.00–18.00 WIB</li>
-        </ul>
-
-        <!-- Contoh penggunaan <a> untuk link sosmed dengan gambar PNG -->
-        <div class="sosmed">
-          <a href="#"><img src="https://cdn.simpleicons.org/instagram" alt="Instagram" /></a>
-          <a href="#"><img src="https://cdn.simpleicons.org/tiktok" alt="TikTok" /></a>
-          <a href="#"><img src="https://cdn.simpleicons.org/shopee" alt="Shopee" /></a>
+    <!-- HALAMAN LOGIN -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <h2>UNAGI ERP</h2>
+            <p class="subtitle">Sistem Manajemen Bisnis Terpadu</p>
+            <div class="error-message" id="loginError"></div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="username" placeholder="Masukkan username" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" placeholder="Masukkan password" required>
+                </div>
+                <button type="submit" class="btn-submit" style="margin-top: 10px;">Masuk ke Dasbor</button>
+            </form>
         </div>
-      </div>
+    </div>
 
-
-      <!-- Form Kontak -->
-      <form id="form-kontak">
-        <div class="form-group">
-          <label for="nama">Nama Lengkap</label><br />
-          <input type="text" id="nama" name="nama" placeholder="Contoh: Budi Santoso" required />
+    <!-- HALAMAN ERP DASHBOARD -->
+    <div id="dashboardContainer">
+        <div class="header">
+            <h1>UNAGI ERP</h1>
+            <div class="header-right">
+                <span>Modul Aktif: MM, SD, FI</span>
+                <button onclick="logout()" class="btn-logout">Logout</button>
+            </div>
         </div>
 
-        <div class="form-group">
-          <label for="telepon">Nomor WhatsApp</label><br />
-          <input type="tel" id="telepon" name="telepon" placeholder="Contoh: 08123456789" required />
+        <div class="nav-tabs">
+            <button class="tab-link active" onclick="openTab(event, 'MM')">📦 Material (MM)</button>
+            <button class="tab-link" onclick="openTab(event, 'SD')">🛒 Sales (SD)</button>
+            <button class="tab-link" onclick="openTab(event, 'FI')">💰 Finance (FI)</button>
         </div>
 
-        <div class="form-group">
-          <label for="pesan">Pesan</label><br />
-          <textarea id="pesan" name="pesan" rows="4" placeholder="Tulis pesan kamu di sini..." required></textarea>
-        </div>
+        <div class="container">
+            <!-- MODAL MM (MATERIAL MANAGEMENT) -->
+            <div id="MM" class="tab-content active">
+                <div class="grid-2">
+                    <div class="panel">
+                        <h2>Pengadaan Bahan Baku</h2>
+                        <form id="mmForm">
+                            <div class="form-group">
+                                <label>Nama Material</label>
+                                <input type="text" id="matName" placeholder="Contoh: Ikan Sidat Hidup 1Kg" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Jenis Material</label>
+                                <select id="matType" required>
+                                    <option value="" disabled selected>Pilih jenis material</option>
+                                    <option value="Bahan Baku">Bahan Baku</option>
+                                    <option value="Bahan Tambahan">Bahan Tambahan</option>
+                                    <option value="Kemasan">Kemasan</option>
+                                    <option value="Lain-lain">Lain-lain</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Kuantitas (Kg/Pcs)</label>
+                                <input type="number" id="matQty" placeholder="Masukkan jumlah" required>
+                            </div>
+                            <div class="grid-2" style="gap:15px; margin-bottom: 20px;">
+                                <div>
+                                    <label>Tanggal Masuk</label>
+                                    <input type="date" id="matEntryDate" required>
+                                </div>
+                                <div>
+                                    <label>Expired Date</label>
+                                    <input type="date" id="matExpDate" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Total Harga Beli (Rp) - Modal</label>
+                                <input type="number" id="matCost" placeholder="0" required>
+                            </div>
+                            <button type="submit" class="btn-submit">Posting Pembelian</button>
+                        </form>
+                    </div>
+                    <div class="panel">
+                        <h2>Inventaris & Biaya Modal</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Material</th>
+                                    <th>Jenis</th>
+                                    <th>Qty</th>
+                                    <th>Tgl Masuk</th>
+                                    <th>Exp Date</th>
+                                    <th>Total Biaya</th>
+                                </tr>
+                            </thead>
+                            <tbody id="mmTableBody">
+                                <!-- Data will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
-        <button type="submit" class="tombol tombol-full">
-          📨 Kirim Pesan
-        </button>
-        <p id="pesan-sukses">
-          ✅ Pesan berhasil diterima oleh Admin Fikri Ganteng
-        </p>
-      </form>
+            <!-- MODAL SD (SALES & DISTRIBUTION) -->
+            <div id="SD" class="tab-content">
+                <div class="grid-2">
+                    <div class="panel">
+                        <h2>Pesanan Penjualan (Sales Order)</h2>
+                        <form id="sdForm">
+                            <div class="form-group">
+                                <label>Nama Pelanggan/Restoran</label>
+                                <input type="text" id="customerName" placeholder="Contoh: Resto Sushi Makmur" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Produk Olahan</label>
+                                <select id="productName" required>
+                                    <option value="" disabled selected>Pilih produk</option>
+                                    <option value="Unagi Kabayaki 200gr">Unagi Kabayaki 200gr</option>
+                                    <option value="Unagi Shirayaki 200gr">Unagi Shirayaki 200gr</option>
+                                    <option value="Saus Unagi Botol 500ml">Saus Unagi Botol 500ml</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Kuantitas Penjualan</label>
+                                <input type="number" id="salesQty" placeholder="Masukkan jumlah" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Total Pendapatan (Rp)</label>
+                                <input type="number" id="salesRevenue" placeholder="0" required>
+                            </div>
+                            <button type="submit" class="btn-submit">Posting Penjualan</button>
+                        </form>
+                    </div>
+                    <div class="panel">
+                        <h2>Riwayat Penjualan</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Pelanggan</th>
+                                    <th>Produk</th>
+                                    <th>Qty</th>
+                                    <th>Pendapatan</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sdTableBody">
+                                <!-- Data will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODAL FI (FINANCIAL ACCOUNTING) -->
+            <div id="FI" class="tab-content">
+                <div class="panel">
+                    <h2>Laporan Keuangan (Real-Time)</h2>
+                    <div class="dashboard-grid">
+                        <div class="dash-card cost">
+                            <h3>Total Biaya Modal (MM)</h3>
+                            <p id="totalCost">Rp 0</p>
+                        </div>
+                        <div class="dash-card revenue">
+                            <h3>Total Pendapatan (SD)</h3>
+                            <p id="totalRevenue">Rp 0</p>
+                        </div>
+                        <div class="dash-card profit">
+                            <h3>Laba Kotor</h3>
+                            <p id="grossProfit">Rp 0</p>
+                        </div>
+                    </div>
+                    <p style="margin-top: 30px; font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+                        *Laba Kotor dihitung dari (Total Pendapatan - Total Biaya Modal). Pada sistem ERP sungguhan
+                        tingkat lanjut, perhitungannya akan melibatkan HPP (Harga Pokok Penjualan) secara spesifik per
+                        barang.
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
-  </section>
 
-  <div class="footer-map">
+    <script>
+        // --- LOGIKA TOAST NOTIFICATION ---
+        function showToast(title, message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
 
-  <iframe
-    src="https://www.google.com/maps?q=Jl.+Pasar+Anyar+No.+12,+Bogor&output=embed"
-    width="100%"
-    height="350"
-    style="border:0;"
-    allowfullscreen=""
-    loading="lazy">
-  </iframe>
+            toast.innerHTML = `
+                <div class="toast-icon">✓</div>
+                <div class="toast-content">
+                    <div class="toast-title">${title}</div>
+                    <div class="toast-desc">${message}</div>
+                </div>
+            `;
 
-</div>
+            container.appendChild(toast);
 
-  <footer class="footer">
-    <p>&copy; 2025 Toko Sayur Bu Ani &mdash; Bogor, Jawa Barat</p>
-    <p>Dibuat dengan <strong>HTML, CSS &amp; JavaScript</strong> 💚</p>
-    <p>Admin ganteng : Fikri Syahirul Alim😎</p>
-  </footer>
-  <script src="script.js"></script>
+            // Trigger animation
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 10);
+
+            // Remove after 3 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    toast.remove();
+                }, 400); // Wait for transition to finish
+            }, 3000);
+        }
+
+        // --- LOGIKA LOGIN (Berbasis Javascript SessionStorage) ---
+        const loginContainer = document.getElementById('loginContainer');
+        const dashboardContainer = document.getElementById('dashboardContainer');
+        const loginForm = document.getElementById('loginForm');
+        const loginError = document.getElementById('loginError');
+
+        function checkLoginStatus() {
+            if (sessionStorage.getItem('user_logged_in') === 'true') {
+                loginContainer.style.display = 'none';
+                dashboardContainer.style.display = 'block';
+                // Fetch data dari database ketika berhasil login
+                fetchMaterials();
+                fetchSales();
+            } else {
+                loginContainer.style.display = 'flex';
+                dashboardContainer.style.display = 'none';
+            }
+        }
+
+        if (loginForm) {
+            loginForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const user = document.getElementById('username').value;
+                const pass = document.getElementById('password').value;
+
+                // Hardcode Admin Account
+                if (user === 'admin' && pass === 'admin123') {
+                    sessionStorage.setItem('user_logged_in', 'true');
+                    loginError.style.display = 'none';
+                    checkLoginStatus();
+
+                    // Clear login inputs
+                    document.getElementById('username').value = '';
+                    document.getElementById('password').value = '';
+
+                    showToast('Login Berhasil', 'Selamat datang di UNAGI ERP');
+                } else {
+                    loginError.style.display = 'block';
+                    loginError.textContent = 'Username atau password salah!';
+                }
+            });
+        }
+
+        function logout() {
+            sessionStorage.removeItem('user_logged_in');
+            checkLoginStatus();
+        }
+
+        // Cek status login pertama kali saat halaman dimuat
+        checkLoginStatus();
+
+
+        // --- LOGIKA ERP (Data State) ---
+        let totalModal = 0;
+        let totalPendapatan = 0;
+
+        // Navigasi Tab
+        function openTab(evt, tabName) {
+            let i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tab-link");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Format Rupiah
+        function formatRupiah(angka) {
+            return "Rp " + angka.toLocaleString('id-ID');
+        }
+
+        // Update Dasbor FI
+        function updateFinanceDashboard() {
+            document.getElementById('totalCost').innerText = formatRupiah(totalModal);
+            document.getElementById('totalRevenue').innerText = formatRupiah(totalPendapatan);
+            document.getElementById('grossProfit').innerText = formatRupiah(totalPendapatan - totalModal);
+        }
+
+        // --- FETCH DATA DARI API (VERCEL BACKEND) ---
+        async function fetchMaterials() {
+            try {
+                const res = await fetch('/api/materials');
+                if(!res.ok) return;
+                const data = await res.json();
+                
+                document.getElementById('mmTableBody').innerHTML = '';
+                totalModal = 0;
+                
+                data.forEach(item => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `<td>${item.name}</td><td>${item.type}</td><td>${item.qty}</td><td>${item.entry_date}</td><td>${item.exp_date}</td><td style="font-weight:600; color:var(--text-main);">${formatRupiah(item.cost)}</td>`;
+                    document.getElementById('mmTableBody').appendChild(tr);
+                    totalModal += Number(item.cost);
+                });
+                updateFinanceDashboard();
+            } catch (err) {
+                console.error("Gagal mengambil data material:", err);
+            }
+        }
+
+        async function fetchSales() {
+            try {
+                const res = await fetch('/api/sales');
+                if(!res.ok) return;
+                const data = await res.json();
+                
+                document.getElementById('sdTableBody').innerHTML = '';
+                totalPendapatan = 0;
+                
+                data.forEach(item => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `<td>${item.customer_name}</td><td>${item.product}</td><td>${item.qty}</td><td style="font-weight:600; color:var(--text-main);">${formatRupiah(item.revenue)}</td>`;
+                    document.getElementById('sdTableBody').appendChild(tr);
+                    totalPendapatan += Number(item.revenue);
+                });
+                updateFinanceDashboard();
+            } catch (err) {
+                console.error("Gagal mengambil data penjualan:", err);
+            }
+        }
+
+        // Proses Submit MM (Pembelian Bahan Baku)
+        const mmForm = document.getElementById('mmForm');
+        if (mmForm) {
+            mmForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                
+                // UX: Tombol Loading
+                const btn = this.querySelector('button[type="submit"]');
+                const oriText = btn.textContent;
+                btn.textContent = 'Menyimpan...';
+                btn.disabled = true;
+
+                const name = document.getElementById('matName').value;
+                const type = document.getElementById('matType').value;
+                const qty = document.getElementById('matQty').value;
+                const entry_date = document.getElementById('matEntryDate').value;
+                const exp_date = document.getElementById('matExpDate').value;
+                const cost = parseFloat(document.getElementById('matCost').value);
+
+                try {
+                    const res = await fetch('/api/materials', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name, type, qty, entry_date, exp_date, cost })
+                    });
+                    
+                    if(res.ok) {
+                        this.reset();
+                        showToast('Pembelian Berhasil', `Material ${name} berhasil disimpan ke Database.`);
+                        // Refresh data dari database
+                        fetchMaterials();
+                    } else {
+                        showToast('Gagal', 'Terjadi kesalahan pada server');
+                    }
+                } catch(err) {
+                    console.error(err);
+                    showToast('Error', 'Gagal menghubungi server backend');
+                } finally {
+                    btn.textContent = oriText;
+                    btn.disabled = false;
+                }
+            });
+        }
+
+        // Proses Submit SD (Penjualan)
+        const sdForm = document.getElementById('sdForm');
+        if (sdForm) {
+            sdForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                
+                const btn = this.querySelector('button[type="submit"]');
+                const oriText = btn.textContent;
+                btn.textContent = 'Menyimpan...';
+                btn.disabled = true;
+
+                const customer_name = document.getElementById('customerName').value;
+                const product = document.getElementById('productName').value;
+                const qty = document.getElementById('salesQty').value;
+                const revenue = parseFloat(document.getElementById('salesRevenue').value);
+
+                try {
+                    const res = await fetch('/api/sales', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ customer_name, product, qty, revenue })
+                    });
+                    
+                    if(res.ok) {
+                        this.reset();
+                        showToast('Penjualan Berhasil', `Pesanan dari ${customer_name} berhasil disimpan.`);
+                        // Refresh data dari database
+                        fetchSales();
+                    } else {
+                        showToast('Gagal', 'Terjadi kesalahan pada server');
+                    }
+                } catch(err) {
+                    console.error(err);
+                    showToast('Error', 'Gagal menghubungi server backend');
+                } finally {
+                    btn.textContent = oriText;
+                    btn.disabled = false;
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>
