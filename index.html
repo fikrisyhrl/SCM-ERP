@@ -140,12 +140,14 @@
                             </div>
                             <div class="form-group">
                                 <label>Produk Olahan</label>
-                                <select id="productName" required>
+                                <select id="productName" required onchange="handleProductChange(this)">
                                     <option value="" disabled selected>Pilih produk</option>
                                     <option value="Unagi Kabayaki 200gr">Unagi Kabayaki 200gr</option>
                                     <option value="Unagi Shirayaki 200gr">Unagi Shirayaki 200gr</option>
                                     <option value="Saus Unagi Botol 500ml">Saus Unagi Botol 500ml</option>
+                                    <option value="__custom__">++ Tambah Produk Baru ++</option>
                                 </select>
+                                <input type="text" id="customProductName" placeholder="Ketik nama produk baru..." style="display:none; margin-top:10px; width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
                             </div>
                             <div class="form-group">
                                 <label>Kuantitas Penjualan</label>
@@ -444,6 +446,18 @@
         function formatRupiah(angka) {
             return "Rp " + angka.toLocaleString('id-ID');
         }
+        
+        function handleProductChange(select) {
+            const customInput = document.getElementById('customProductName');
+            if (select.value === '__custom__') {
+                customInput.style.display = 'block';
+                customInput.required = true;
+            } else {
+                customInput.style.display = 'none';
+                customInput.required = false;
+                customInput.value = '';
+            }
+        }
 
         // Update Dasbor FI
         function updateFinanceDashboard() {
@@ -494,13 +508,40 @@
                 document.getElementById('sdTableBody').innerHTML = '';
                 totalPendapatan = 0;
                 
+                let uniqueProducts = new Set(["Unagi Kabayaki 200gr", "Unagi Shirayaki 200gr", "Saus Unagi Botol 500ml"]);
+                
                 data.forEach(item => {
                     const tr = document.createElement('tr');
                     tr.innerHTML = `<td>${item.customer_name}</td><td>${item.product}</td><td>${item.qty}</td><td style="font-weight:600; color:var(--text-main);">${formatRupiah(item.revenue)}</td>
                     <td><button onclick="deleteSales(${item.id})" style="background:#ff4d4f; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; font-size:12px;">Hapus</button></td>`;
                     document.getElementById('sdTableBody').appendChild(tr);
                     totalPendapatan += Number(item.revenue);
+                    uniqueProducts.add(item.product);
                 });
+                
+                // Update dropdown options
+                const productSelect = document.getElementById('productName');
+                const currentValue = productSelect.value; // simpan pilihan saat ini (jika sedang tidak kosong)
+                
+                productSelect.innerHTML = '<option value="" disabled>Pilih produk</option>';
+                uniqueProducts.forEach(prod => {
+                    const opt = document.createElement('option');
+                    opt.value = prod;
+                    opt.textContent = prod;
+                    productSelect.appendChild(opt);
+                });
+                const customOpt = document.createElement('option');
+                customOpt.value = "__custom__";
+                customOpt.textContent = "++ Tambah Produk Baru ++";
+                productSelect.appendChild(customOpt);
+                
+                // Kembalikan pilihan jika masih ada di daftar
+                if(currentValue && currentValue !== '__custom__') {
+                    productSelect.value = currentValue;
+                } else if(!currentValue) {
+                    productSelect.selectedIndex = 0;
+                }
+                
                 updateFinanceDashboard();
             } catch (err) {
                 console.error("Gagal mengambil data penjualan:", err);
@@ -568,7 +609,16 @@
                 btn.disabled = true;
 
                 const customer_name = document.getElementById('customerName').value;
-                const product = document.getElementById('productName').value;
+                let product = document.getElementById('productName').value;
+                if (product === '__custom__') {
+                    product = document.getElementById('customProductName').value;
+                    if (!product || !product.trim()) {
+                        showToast('Gagal', 'Nama produk baru tidak boleh kosong!');
+                        btn.textContent = oriText;
+                        btn.disabled = false;
+                        return;
+                    }
+                }
                 const qty = document.getElementById('salesQty').value;
                 const revenue = parseFloat(document.getElementById('salesRevenue').value);
 
