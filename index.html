@@ -88,8 +88,14 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Kuantitas (Kg/Pcs)</label>
-                                <input type="number" id="matQty" placeholder="Masukkan jumlah" required>
+                                <label>Kuantitas</label>
+                                <div style="display: flex; gap: 10px;">
+                                    <input type="number" id="matQty" placeholder="Masukkan jumlah" required style="flex: 1;">
+                                    <select id="matUnit" required style="width: 100px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; outline: none; font-family: inherit;">
+                                        <option value="Kg">Kg</option>
+                                        <option value="Pcs">Pcs</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="grid-2" style="gap:15px; margin-bottom: 20px;">
                                 <div>
@@ -152,7 +158,7 @@
                                 <input type="text" id="customProductName" placeholder="Ketik nama produk baru..." style="display:none; margin-top:10px; width: 100%; box-sizing: border-box; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
                             </div>
                             <div class="form-group">
-                                <label>Kuantitas Penjualan</label>
+                                <label>Kuantitas Penjualan (Pcs)</label>
                                 <input type="number" id="salesQty" placeholder="Masukkan jumlah" required>
                             </div>
                             <div class="form-group">
@@ -548,8 +554,16 @@
                 totalModal = 0;
                 
                 data.forEach(item => {
+                    let displayName = item.name;
+                    let displayUnit = '';
+                    if (item.name && item.name.includes('__UNIT__')) {
+                        const parts = item.name.split('__UNIT__');
+                        displayName = parts[0];
+                        displayUnit = ' ' + parts[1];
+                    }
+
                     const tr = document.createElement('tr');
-                    tr.innerHTML = `<td>${item.name}</td><td>${item.type}</td><td>${item.qty}</td><td>${item.entry_date}</td><td>${item.exp_date}</td><td style="font-weight:600; color:var(--text-main);">${formatRupiah(item.cost)}</td>
+                    tr.innerHTML = `<td>${displayName}</td><td>${item.type}</td><td>${item.qty}${displayUnit}</td><td>${item.entry_date}</td><td>${item.exp_date}</td><td style="font-weight:600; color:var(--text-main);">${formatRupiah(item.cost)}</td>
                     <td><button onclick="deleteMaterial(${item.id})" style="background:#ff4d4f; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; font-size:12px;">Hapus</button></td>`;
                     document.getElementById('mmTableBody').appendChild(tr);
                     totalModal += Number(item.cost);
@@ -578,7 +592,7 @@
                 
                 data.forEach(item => {
                     const tr = document.createElement('tr');
-                    tr.innerHTML = `<td>${item.customer_name}</td><td>${item.product}</td><td>${item.qty}</td><td style="font-weight:600; color:var(--text-main);">${formatRupiah(item.revenue)}</td>
+                    tr.innerHTML = `<td>${item.customer_name}</td><td>${item.product}</td><td>${item.qty} Pcs</td><td style="font-weight:600; color:var(--text-main);">${formatRupiah(item.revenue)}</td>
                     <td><button onclick="deleteSales(${item.id})" style="background:#ff4d4f; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; font-size:12px;">Hapus</button></td>`;
                     document.getElementById('sdTableBody').appendChild(tr);
                     totalPendapatan += Number(item.revenue);
@@ -626,7 +640,9 @@
                 btn.textContent = 'Menyimpan...';
                 btn.disabled = true;
 
-                const name = document.getElementById('matName').value;
+                const baseName = document.getElementById('matName').value;
+                const unit = document.getElementById('matUnit').value;
+                const name = baseName + '__UNIT__' + unit;
                 const type = document.getElementById('matType').value;
                 const qty = document.getElementById('matQty').value;
                 const entry_date = document.getElementById('matEntryDate').value;
