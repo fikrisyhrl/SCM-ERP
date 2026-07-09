@@ -62,6 +62,8 @@
             <button class="tab-link active" onclick="openTab(event, 'MM')">📦 Material (MM)</button>
             <button class="tab-link" onclick="openTab(event, 'SD')">🛒 Sales (SD)</button>
             <button class="tab-link" onclick="openTab(event, 'FI')">💰 Finance (FI)</button>
+            <button class="tab-link" onclick="openTab(event, 'SETTINGS')">⚙️ Pengaturan</button>
+            <button class="tab-link" id="adminTabLink" style="display:none;" onclick="openTab(event, 'ADMIN')">👑 Admin Panel</button>
         </div>
 
         <div class="container">
@@ -205,6 +207,67 @@
                     </p>
                 </div>
             </div>
+            
+            <!-- MODAL PENGATURAN -->
+            <div id="SETTINGS" class="tab-content">
+                <div class="grid-2">
+                    <div class="panel">
+                        <h2>Ganti Kata Sandi</h2>
+                        <form id="passwordForm">
+                            <div class="form-group">
+                                <label>Kata Sandi Baru</label>
+                                <input type="password" id="newPassword" placeholder="Minimal 6 karakter" required>
+                            </div>
+                            <button type="submit" class="btn-submit">Update Password</button>
+                        </form>
+                    </div>
+                    <div class="panel">
+                        <h2>Kirim Feedback ke Admin</h2>
+                        <form id="feedbackForm">
+                            <div class="form-group">
+                                <label>Pesan Anda</label>
+                                <textarea id="feedbackMessage" rows="4" placeholder="Ketik saran, laporan bug, atau pertanyaan di sini..." required style="width:100%; padding:10px; border:1px solid #ddd; border-radius:4px; box-sizing:border-box; font-family:inherit;"></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit">Kirim Feedback</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODAL ADMIN -->
+            <div id="ADMIN" class="tab-content">
+                <div class="grid-2">
+                    <div class="panel">
+                        <h2>Daftar Pengguna Terdaftar</h2>
+                        <table style="font-size: 13px;">
+                            <thead>
+                                <tr>
+                                    <th>Email Pengguna</th>
+                                    <th>Tgl Terdaftar</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                                <!-- Data will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="panel">
+                        <h2>Feedback Pengguna</h2>
+                        <table style="font-size: 13px;">
+                            <thead>
+                                <tr>
+                                    <th>Email</th>
+                                    <th>Pesan Feedback</th>
+                                    <th>Tanggal</th>
+                                </tr>
+                            </thead>
+                            <tbody id="feedbackTableBody">
+                                <!-- Data will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -308,8 +371,11 @@
                 const headerRightSpan = document.querySelector('.header-right span');
                 if (userEmail === 'admin@unagi.com') {
                     headerRightSpan.innerHTML = 'Modul Aktif: MM, SD, FI <br><strong style="color:var(--primary-color); font-size: 13px;">[Mode Admin]</strong>';
+                    document.getElementById('adminTabLink').style.display = 'inline-block';
+                    fetchAdminData();
                 } else {
                     headerRightSpan.textContent = 'Modul Aktif: MM, SD, FI';
+                    document.getElementById('adminTabLink').style.display = 'none';
                 }
                 
                 // Fetch data dari database ketika berhasil login
@@ -695,6 +761,111 @@
                 console.error(err);
                 showToast('Error', 'Gagal menghubungi server backend.');
             }
+        }
+        
+        // --- LOGIKA PENGATURAN (GANTI PASSWORD & FEEDBACK) ---
+        const passwordForm = document.getElementById('passwordForm');
+        if (passwordForm) {
+            passwordForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const btn = this.querySelector('button[type="submit"]');
+                const oriText = btn.textContent;
+                btn.textContent = 'Memproses...';
+                btn.disabled = true;
+
+                const newPassword = document.getElementById('newPassword').value;
+                try {
+                    const { error } = await supabaseClient.auth.updateUser({ password: newPassword });
+                    if (error) throw error;
+                    showToast('Berhasil', 'Kata sandi berhasil diperbarui.');
+                    this.reset();
+                } catch(err) {
+                    showToast('Gagal', err.message || 'Gagal mengubah kata sandi.');
+                } finally {
+                    btn.textContent = oriText;
+                    btn.disabled = false;
+                }
+            });
+        }
+        
+        const feedbackForm = document.getElementById('feedbackForm');
+        if (feedbackForm) {
+            feedbackForm.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const btn = this.querySelector('button[type="submit"]');
+                const oriText = btn.textContent;
+                btn.textContent = 'Mengirim...';
+                btn.disabled = true;
+
+                const message = document.getElementById('feedbackMessage').value;
+                const token = sessionStorage.getItem('access_token');
+                
+                try {
+                    const res = await fetch('/api/feedback', {
+                        method: 'POST',
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ message })
+                    });
+                    
+                    if (res.ok) {
+                        showToast('Terkirim', 'Terima kasih atas feedback Anda!');
+                        this.reset();
+                        // Jika admin yang kirim, refresh datanya
+                        if(sessionStorage.getItem('user_email') === 'admin@unagi.com') {
+                            fetchAdminData();
+                        }
+                    } else {
+                        const err = await res.json().catch(()=>({}));
+                        showToast('Gagal', err.error || 'Gagal mengirim feedback');
+                    }
+                } catch(err) {
+                    showToast('Error', 'Gagal menghubungi server.');
+                } finally {
+                    btn.textContent = oriText;
+                    btn.disabled = false;
+                }
+            });
+        }
+        
+        // --- LOGIKA ADMIN PANEL ---
+        async function fetchAdminData() {
+            const token = sessionStorage.getItem('access_token');
+            if (!token) return;
+
+            // Fetch Profiles
+            try {
+                const res = await fetch('/api/admin', { headers: { 'Authorization': `Bearer ${token}` } });
+                if(res.ok) {
+                    const data = await res.json();
+                    document.getElementById('usersTableBody').innerHTML = '';
+                    data.forEach(item => {
+                        const tr = document.createElement('tr');
+                        const dateObj = new Date(item.created_at);
+                        const dateStr = dateObj.toLocaleDateString('id-ID') + ' ' + dateObj.toLocaleTimeString('id-ID');
+                        tr.innerHTML = `<td>${item.email}</td><td>${dateStr}</td>`;
+                        document.getElementById('usersTableBody').appendChild(tr);
+                    });
+                }
+            } catch(e) { console.error(e); }
+
+            // Fetch Feedback
+            try {
+                const res = await fetch('/api/feedback', { headers: { 'Authorization': `Bearer ${token}` } });
+                if(res.ok) {
+                    const data = await res.json();
+                    document.getElementById('feedbackTableBody').innerHTML = '';
+                    data.forEach(item => {
+                        const tr = document.createElement('tr');
+                        const dateObj = new Date(item.created_at);
+                        const dateStr = dateObj.toLocaleDateString('id-ID');
+                        tr.innerHTML = `<td>${item.email}</td><td style="white-space: pre-wrap;">${item.message}</td><td>${dateStr}</td>`;
+                        document.getElementById('feedbackTableBody').appendChild(tr);
+                    });
+                }
+            } catch(e) { console.error(e); }
         }
     </script>
 </body>
