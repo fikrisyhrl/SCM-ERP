@@ -47,12 +47,12 @@ module.exports = async (req, res) => {
     
     if (req.method === 'POST') {
         // MENYIMPAN DATA PENJUALAN BARU (CREATE)
-        let bodyData = req.body;
+        let bodyData = req.body || {};
         if (typeof bodyData === 'string') {
             try { bodyData = JSON.parse(bodyData); } catch (e) { }
         }
         
-        const { customer_name, product, qty, revenue } = bodyData;
+        const { customer_name, product, qty, revenue } = bodyData || {};
         
         const { data, error } = await supabase
             .from('sales')

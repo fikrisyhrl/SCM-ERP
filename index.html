@@ -543,7 +543,8 @@
                         // Refresh data dari database
                         fetchMaterials();
                     } else {
-                        showToast('Gagal', 'Terjadi kesalahan pada server');
+                        const errData = await res.json().catch(() => ({}));
+                        showToast('Gagal', errData.error || errData.message || 'Terjadi kesalahan pada server');
                     }
                 } catch(err) {
                     console.error(err);
@@ -588,7 +589,8 @@
                         // Refresh data dari database
                         fetchSales();
                     } else {
-                        showToast('Gagal', 'Terjadi kesalahan pada server');
+                        const errData = await res.json().catch(() => ({}));
+                        showToast('Gagal', errData.error || errData.message || 'Terjadi kesalahan pada server');
                     }
                 } catch(err) {
                     console.error(err);
