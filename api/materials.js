@@ -1,8 +1,8 @@
 const { createClient } = require('@supabase/supabase-js');
 
-// Inisialisasi Supabase menggunakan environment variables (dari Vercel .env)
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_KEY;
+// Inisialisasi Supabase menggunakan environment variables (dari Vercel .env) atau fallback
+const supabaseUrl = process.env.SUPABASE_URL || 'https://tapklrbygapkxsksltgw.supabase.co';
+const supabaseKey = process.env.SUPABASE_KEY || 'sb_publishable_ud69cPdqZTKPBfCESXVWdA_miQUfzeZ';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 module.exports = async (req, res) => {
