@@ -117,6 +117,7 @@
                                     <th>Tgl Masuk</th>
                                     <th>Exp Date</th>
                                     <th>Total Biaya</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody id="mmTableBody">
@@ -166,6 +167,7 @@
                                     <th>Produk</th>
                                     <th>Qty</th>
                                     <th>Pendapatan</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody id="sdTableBody">
@@ -283,9 +285,11 @@
                 if (data.session) {
                     sessionStorage.setItem('user_logged_in', 'true');
                     sessionStorage.setItem('access_token', data.session.access_token);
+                    if(data.session.user) sessionStorage.setItem('user_email', data.session.user.email);
                 } else {
                     sessionStorage.removeItem('user_logged_in');
                     sessionStorage.removeItem('access_token');
+                    sessionStorage.removeItem('user_email');
                 }
             } catch (err) {
                 console.error("Gagal memuat konfigurasi:", err);
@@ -297,6 +301,15 @@
             if (sessionStorage.getItem('user_logged_in') === 'true') {
                 loginContainer.style.display = 'none';
                 dashboardContainer.style.display = 'block';
+                
+                const userEmail = sessionStorage.getItem('user_email');
+                const headerRightSpan = document.querySelector('.header-right span');
+                if (userEmail === 'admin@unagi.com') {
+                    headerRightSpan.innerHTML = 'Modul Aktif: MM, SD, FI <br><strong style="color:var(--primary-color); font-size: 13px;">[Mode Admin]</strong>';
+                } else {
+                    headerRightSpan.textContent = 'Modul Aktif: MM, SD, FI';
+                }
+                
                 // Fetch data dari database ketika berhasil login
                 fetchMaterials();
                 fetchSales();
@@ -341,6 +354,7 @@
                         
                         sessionStorage.setItem('user_logged_in', 'true');
                         sessionStorage.setItem('access_token', data.session.access_token);
+                        if(data.user) sessionStorage.setItem('user_email', data.user.email);
                         
                         document.getElementById('email').value = '';
                         document.getElementById('password').value = '';
@@ -399,6 +413,7 @@
             }
             sessionStorage.removeItem('user_logged_in');
             sessionStorage.removeItem('access_token');
+            sessionStorage.removeItem('user_email');
             checkLoginStatus();
         }
 
@@ -454,7 +469,8 @@
                 
                 data.forEach(item => {
                     const tr = document.createElement('tr');
-                    tr.innerHTML = `<td>${item.name}</td><td>${item.type}</td><td>${item.qty}</td><td>${item.entry_date}</td><td>${item.exp_date}</td><td style="font-weight:600; color:var(--text-main);">${formatRupiah(item.cost)}</td>`;
+                    tr.innerHTML = `<td>${item.name}</td><td>${item.type}</td><td>${item.qty}</td><td>${item.entry_date}</td><td>${item.exp_date}</td><td style="font-weight:600; color:var(--text-main);">${formatRupiah(item.cost)}</td>
+                    <td><button onclick="deleteMaterial(${item.id})" style="background:#ff4d4f; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; font-size:12px;">Hapus</button></td>`;
                     document.getElementById('mmTableBody').appendChild(tr);
                     totalModal += Number(item.cost);
                 });
@@ -480,7 +496,8 @@
                 
                 data.forEach(item => {
                     const tr = document.createElement('tr');
-                    tr.innerHTML = `<td>${item.customer_name}</td><td>${item.product}</td><td>${item.qty}</td><td style="font-weight:600; color:var(--text-main);">${formatRupiah(item.revenue)}</td>`;
+                    tr.innerHTML = `<td>${item.customer_name}</td><td>${item.product}</td><td>${item.qty}</td><td style="font-weight:600; color:var(--text-main);">${formatRupiah(item.revenue)}</td>
+                    <td><button onclick="deleteSales(${item.id})" style="background:#ff4d4f; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer; font-size:12px;">Hapus</button></td>`;
                     document.getElementById('sdTableBody').appendChild(tr);
                     totalPendapatan += Number(item.revenue);
                 });
@@ -581,6 +598,51 @@
                     btn.disabled = false;
                 }
             });
+        }
+        
+        // --- FUNGSI DELETE DATA ---
+        async function deleteMaterial(id) {
+            if (!confirm('Apakah Anda yakin ingin menghapus data material ini?')) return;
+            
+            const token = sessionStorage.getItem('access_token');
+            try {
+                const res = await fetch(`/api/materials?id=${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (res.ok) {
+                    showToast('Berhasil', 'Data material berhasil dihapus.');
+                    fetchMaterials();
+                } else {
+                    showToast('Gagal', 'Gagal menghapus data material.');
+                }
+            } catch(err) {
+                console.error(err);
+                showToast('Error', 'Gagal menghubungi server backend.');
+            }
+        }
+        
+        async function deleteSales(id) {
+            if (!confirm('Apakah Anda yakin ingin menghapus data penjualan ini?')) return;
+            
+            const token = sessionStorage.getItem('access_token');
+            try {
+                const res = await fetch(`/api/sales?id=${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (res.ok) {
+                    showToast('Berhasil', 'Data penjualan berhasil dihapus.');
+                    fetchSales();
+                } else {
+                    showToast('Gagal', 'Gagal menghapus data penjualan.');
+                }
+            } catch(err) {
+                console.error(err);
+                showToast('Error', 'Gagal menghubungi server backend.');
+            }
         }
     </script>
 </body>
