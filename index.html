@@ -45,6 +45,52 @@
                 </div>
                 <button type="submit" class="btn-submit" id="btnSubmitAuth" style="margin-top: 10px;">Masuk ke Dasbor</button>
             </form>
+
+            <div style="margin-top: 25px; border-top: 1px solid var(--border-color); padding-top: 15px;">
+                <details style="background: var(--bg-body); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 12px 15px; cursor: pointer; transition: all 0.3s ease;">
+                    <summary style="font-weight: 600; color: var(--primary); outline: none; font-size: 14px; display: flex; align-items: center; justify-content: space-between;">
+                        <span>📖 Buku Panduan Sistem</span>
+                        <span style="font-size: 12px; color: var(--text-muted); font-weight: normal;">Klik untuk buka</span>
+                    </summary>
+                    <div style="margin-top: 15px; font-size: 13px; color: var(--text-muted); line-height: 1.6; max-height: 250px; overflow-y: auto; padding-right: 10px; cursor: default;">
+                        <h4 style="color: var(--text-main); margin: 0 0 10px 0; font-size: 14px;">Selamat datang di UNAGI ERP!</h4>
+                        <p style="margin-top: 0;">Berikut adalah panduan singkat penggunaan sistem ini:</p>
+                        
+                        <b style="color: var(--text-main); display: block; margin-top: 12px;">1. Mendaftar & Masuk (Login)</b>
+                        <ul style="margin-top: 5px; padding-left: 20px; margin-bottom: 0;">
+                            <li>Pilih tab <b>Daftar Akun</b> jika belum memiliki akun.</li>
+                            <li>Masukkan Email dan Password (minimal 6 karakter).</li>
+                            <li>Setelah pendaftaran berhasil, kembali ke tab <b>Masuk</b> untuk login ke dasbor.</li>
+                        </ul>
+
+                        <b style="color: var(--text-main); display: block; margin-top: 12px;">2. Modul Material Management (MM)</b>
+                        <ul style="margin-top: 5px; padding-left: 20px; margin-bottom: 0;">
+                            <li>Digunakan untuk mencatat pembelian atau pengadaan bahan baku.</li>
+                            <li>Isi form dengan lengkap. Anda kini bisa memilih satuan <b>Kg</b> atau <b>Pcs</b> di kolom Kuantitas.</li>
+                            <li>Data yang diinput akan otomatis menambah <b>Total Biaya Modal</b> di dashboard Keuangan.</li>
+                        </ul>
+
+                        <b style="color: var(--text-main); display: block; margin-top: 12px;">3. Modul Sales Distribution (SD)</b>
+                        <ul style="margin-top: 5px; padding-left: 20px; margin-bottom: 0;">
+                            <li>Digunakan untuk mencatat pesanan dari pelanggan (penjualan produk).</li>
+                            <li>Kuantitas penjualan selalu menggunakan satuan <b>Pcs</b>.</li>
+                            <li>Data yang diinput akan otomatis menambah <b>Total Pendapatan</b> di dashboard Keuangan.</li>
+                        </ul>
+
+                        <b style="color: var(--text-main); display: block; margin-top: 12px;">4. Modul Finance (FI)</b>
+                        <ul style="margin-top: 5px; padding-left: 20px; margin-bottom: 0;">
+                            <li>Menampilkan ringkasan keuangan secara real-time.</li>
+                            <li><b>Laba Kotor</b> dihitung otomatis dari (Total Pendapatan - Total Biaya Modal).</li>
+                        </ul>
+
+                        <b style="color: var(--text-main); display: block; margin-top: 12px;">5. Pengaturan & Bantuan</b>
+                        <ul style="margin-top: 5px; padding-left: 20px; margin-bottom: 0;">
+                            <li>Gunakan tab <b>Pengaturan</b> untuk mengubah kata sandi akun Anda.</li>
+                            <li>Anda juga dapat mengirimkan <b>Feedback</b> (saran/pertanyaan) kepada Admin sistem melalui form yang tersedia.</li>
+                        </ul>
+                    </div>
+                </details>
+            </div>
         </div>
     </div>
 
